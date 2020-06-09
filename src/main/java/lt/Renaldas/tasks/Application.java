@@ -16,9 +16,7 @@ import lt.Renaldas.tasks.repositories.TaskRepository;
 @SpringBootApplication 
 @EnableAutoConfiguration
 @ComponentScan(basePackages={"lt.Renaldas.tasks"})
-//@EnableJpaRepositories(basePackages="com.baeldung.crud.repositories")
 @EnableTransactionManagement
-//@EntityScan(basePackages="com.baeldung.crud.entities")
 public class Application {
     
     
