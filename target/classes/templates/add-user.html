@@ -18,24 +18,31 @@ body {
 	background-color: #3e3e3e;
 	color: white;
 }
+
+@media (min-width: 400px) {
+  .container-fluid{
+    width: 400px;
+  }
+}
 </style>
 </head>
 <body>
-	<div class="container my-5">
-		<h2 class="mb-5">New Task</h2>
+	<div class="container-fluid my-5">
+		<h2 class="mb-1">New Task</h2>
+		<hr style="border: 1px solid white">
 		<div class="row">
 			<div class="col-md-12">
 				<form action="#" th:action="@{/adduser}" th:object="${task}"
 					method="post">
 					<div class="row">
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-12">
 							<label for="name" class="col-form-label">Name</label> <input
 								type="text" th:field="*{name}" class="form-control" id="name"
-								placeholder="Name"> <span
+								placeholder="Name..."> <span
 								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 								class="text-danger"></span>
 						</div>
-
+						<!-- 
 						<div class="form-group col-md-6">
 							<label for="description" class="col-form-label">Description</label>
 							<input type="text" th:field="*{description}" class="form-control"
@@ -43,10 +50,17 @@ body {
 								th:if="${#fields.hasErrors('description')}"
 								th:errors="*{description}" class="text-danger"></span>
 						</div>
+						 -->
+						
+						<div class="form-group col-md-12">
+								<label for="description" class="col-form-label">Description</label>
+								<textarea class="form-control" th:field="*{description}"
+									rows="3" placeholder="Description..."></textarea>
+						</div>
 
-						<div class="form-group col-md">
-							<label for="taskStatus">Select Trainee</label> <select
-								th:field="*{trainee}">
+						<div class="form-group col-md-6">
+							<label for="taskStatus">Select Trainee</label> 
+							<select	th:field="*{trainee}" class="form-control">
 								<option
 									th:each="traineeOpt : ${T(lt.Renaldas.tasks.entities.Trainee).values()}"
 									th:value="${traineeOpt}" th:text="${traineeOpt.displayValue}">
@@ -54,9 +68,10 @@ body {
 							</select>
 						</div>
 
-						<div class="form-group col-md">
-							<label for="taskStatus">Task Status</label> <select
-								th:field="*{taskStatus}">
+						<div class="form-group col-md-6">
+							<label for="taskStatus">Task Status</label>
+							 <select
+								th:field="*{taskStatus}" class="form-control">
 								<option th:value="'COMPLETE'" th:text="COMPLETE"></option>
 								<option th:value="'NOT_COMPLETED'" th:text="NOT_COMPLETED"></option>
 							</select>

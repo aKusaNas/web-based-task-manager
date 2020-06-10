@@ -23,7 +23,7 @@ public class Application {
 	@Bean
 	public CommandLineRunner projectTestData(TaskRepository taskService) {
 		return (args) -> {
-		    taskService.save(new Task("LINDA Task", "Task description",Trainee.LINDA ,TaskStatus.NOT_COMPLETED));
+		    taskService.save(new Task("LINDA Task", "Task description, Task description, Task description, Task descriptionTask description",Trainee.LINDA ,TaskStatus.NOT_COMPLETED));
 		    taskService.save(new Task("LINDA Task", "Dummy Task description ",Trainee.LINDA , TaskStatus.NOT_COMPLETED));
 		    taskService.save(new Task("LINDA Dummy Task", "a Task description",Trainee.LINDA , TaskStatus.NOT_COMPLETED));
 		    taskService.save(new Task("KAROLIS Task", "Task description",Trainee.KAROLIS,TaskStatus.NOT_COMPLETED));

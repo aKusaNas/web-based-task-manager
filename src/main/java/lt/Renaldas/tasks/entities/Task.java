@@ -1,11 +1,13 @@
 package lt.Renaldas.tasks.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -18,6 +20,7 @@ public class Task {
     private String name;
 
     @NotBlank(message = "Description is a must")
+    @Column(columnDefinition="TEXT")
     private String description;
 
     @Enumerated(EnumType.STRING)

@@ -18,29 +18,35 @@ body {
 	background-color: #3e3e3e;
 	color: white;
 }
+@media (min-width: 400px) {
+  .container-fluid{
+    width: 400px;
+  }
+}
 </style>
 </head>
 <body>
 
 	<!-- ADMIN PART -->
-	<div sec:authorize="hasAnyRole('ROLE_ADMIN')" class="container my-5">
-		<h2 class="mb-5">Update Task</h2>
+	<div sec:authorize="hasAnyRole('ROLE_ADMIN')" class="container-fluid my-5">
+		<h2 class="mb-1">Update Task</h2>
+		<hr style="border: 1px solid white">
 		<div class="row">
-			<div class="col-md">
+			<div class="col-md-12">
 
-				<div class="form-group col-md">
+				
 
 					<form action="#" th:action="@{/update/{id}(id=${task.id})}"
 						th:object="${task}" method="post">
 						<div class="row">
-							<div class="form-group col-md-6">
+							<div class="form-group col-md-12">
 								<label for="name" class="col-form-label">Name</label> <input
 									type="text" th:field="*{name}" class="form-control" id="name"
-									placeholder="Name"> <span
+									placeholder="Name..."> <span
 									th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 									class="text-danger"> </span>
 							</div>
-
+							<!--  
 							<div class="form-group col-md-6">
 								<label for="email" class="col-form-label">Description</label> <input
 									type="text" th:field="*{description}" class="form-control"
@@ -48,17 +54,26 @@ body {
 									th:if="${#fields.hasErrors('description')}"
 									th:errors="*{description}" class="text-danger"> </span>
 							</div>
+							-->
+							<div class="form-group col-md-12">
+								<label for="description" class="col-form-label">Description</label>
+								<textarea class="form-control" th:field="*{description}"
+									rows="3" placeholder="Description..."></textarea>
+							</div>
 
-							<div class="form-group col-md">
-								<select th:field="*{trainee}">
+							<div class="form-group col-md-6">
+								<label for="taskStatus">Select Trainee</label>
+								<select th:field="*{trainee}" class="form-control">
 									<option
 										th:each="traineeOpt : ${T(lt.Renaldas.tasks.entities.Trainee).values()}"
-										th:value="${traineeOpt}" th:text="${traineeOpt.displayValue}"></option>
+										th:value="${traineeOpt}" th:text="${traineeOpt.displayValue}">
+										</option>
 								</select>
 							</div>
 
-							<div class="form-group col-md">
-								<select th:field="*{taskStatus}">
+							<div class="form-group col-md-6">
+							<label for="taskStatus">Task Status</label>
+								<select th:field="*{taskStatus}" class="form-control">
 									<option th:value="'COMPLETE'" th:text="COMPLETE"></option>
 									<option th:value="'NOT_COMPLETED'" th:text="NOT_COMPLETED">
 									</option>
@@ -79,27 +94,31 @@ body {
 							value="Back" onclick="history.back()">
 					</form>
 				</div>
-			</div>
+			
 		</div>
 	</div>
 
 	<!-- TRAINEE PART -->
 	<div sec:authorize="hasAnyRole('ROLE_ADMINTRAINEE')"
-		class="container my-5">
-		<h2 class="mb-5">Update Task</h2>
+		class="container-fluid my-5">
+		<h2 class="mb-1">Update Task</h2>
+		<hr style="border: 1px solid white">
 		<div class="row">
-			<div class="col-md">
+			<div class="col-md-12">
 
 				<form action="#" th:action="@{/update/{id}(id=${task.id})}"
 					th:object="${task}" method="post">
 					<div class="row">
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-12">
 							<label for="name" class="col-form-label">Name</label> <input
 								type="text" th:field="*{name}" class="form-control" id="name"
-								placeholder="Name" readonly> <span
+								readonly> 
+								<span
 								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-								class="text-danger"></span>
+								class="text-danger">
+								</span>
 						</div>
+						<!-- 
 						<div class="form-group col-md-6">
 							<label for="description" class="col-form-label">Description</label>
 							<input type="text" th:field="*{description}" class="form-control"
@@ -107,18 +126,23 @@ body {
 								th:if="${#fields.hasErrors('description')}"
 								th:errors="*{description}" class="text-danger"> </span>
 						</div>
-
-
-						<div class="form-group col-md">
+						 -->
+						<div class="form-group col-md-12">
+								<label for="description" class="col-form-label">Description</label>
+								<textarea class="form-control" th:field="*{description}"
+									rows="3" readonly>
+								</textarea>
+						</div>
+						<div class="form-group col-md-12">
 
 							<input type="hidden" th:field="*{trainee}" class="form-control"
 								id="trainee" readonly>
 						</div>
 
 
-						<div class="form-group col-md">
-							<label for="taskStatus" class="col-form-label">Select
-								Status</label> <select th:field="*{taskStatus}">
+						<div class="form-group col-md-12">
+							<label for="taskStatus" class="col-form-label">Task Status</label> 
+							<select th:field="*{taskStatus}" class="form-control">
 								<option th:value="'COMPLETE'" th:text="COMPLETE"></option>
 								<option th:value="'NOT_COMPLETED'" th:text="NOT_COMPLETED"></option>
 							</select>
@@ -131,6 +155,7 @@ body {
 						</div>
 					</div>
 				</form>
+
 				<br>
 
 				<form>
