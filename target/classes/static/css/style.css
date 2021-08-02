@@ -1,0 +1,24 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(228deg, #222831, #30475e);
+    background-size: 400% 400%;
+
+    animation: AnimationName 20s ease infinite;
+	color: white;
+}
+
+@keyframes AnimationName {
+    0%{background-position:0% 55%}
+    50%{background-position:100% 46%}
+    100%{background-position:0% 55%}
+}
+
+@media (min-width: 400px) {
+    .container-fluid{
+      width: 400px;
+    }
+  }

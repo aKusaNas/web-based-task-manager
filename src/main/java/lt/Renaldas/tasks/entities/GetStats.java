@@ -9,48 +9,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.sql.*;
 
 public class GetStats {
     private static Logger logger = LoggerFactory.getLogger(GetStats.class);
 
     final private String playertag;
-//    final private String platform;
+    final private String platform;
 
-    public GetStats(String playertag) {
+    public GetStats(String playertag, String platform) {
         this.playertag = playertag.replaceAll("#", "%23");
-//        this.platform = platform.replaceAll("#", "%23");
+        this.platform = platform.replaceAll("#", "%23");
     }
 
     public Player getPlayerStats() {
 
         Player player = new Player();
-        String platform = null;
 
-        try (Connection connection = getConnection()) {
-            try (Statement stmt = connection.createStatement()) {
-                ResultSet check = stmt.executeQuery("SELECT CASE WHEN count(1) > 0 THEN TRUE ELSE FALSE END FROM wzregistration WHERE discord_user_id = '" + member.getIdLong() + "';");
-                check.next();
-                if (check.getBoolean(1)) {
-                    check = stmt.executeQuery("SELECT * FROM wzregistration WHERE discord_user_id = '" + member.getIdLong() + "';");
-                    check.next();
-//                    nametag = check.getString("nametag");
-                    platform = check.getString("platform");
 
-                }
-//                else {
-//                    RegimentKomandos.embededOriginalMessage(channel, 250, "**Norint naudotis statistiką reikia užsiregistruoti kanale:** <#" + statsrolesloadout + "> \n`!wzreg <nametag> <platforma>` \n Užsiregistravus nebereikės vesti savo duomenų.");
-//                    return;
-//                }
-                stmt.close();
-                check.close();
-                connection.close();
-            }
-        } catch (URISyntaxException | SQLException e) {
-            logger.debug("", e);
-        }
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -92,15 +67,5 @@ public class GetStats {
         public String wins;
         public int brAll;
     }
-
-    public static Connection getConnection() throws URISyntaxException, SQLException {
-        URI dbUri = new URI(System.getenv("DATABASE_URL"));
-
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-//        System.out.println("/////////////// HEROKU POSTGRESQL ///////////////////");
-
-        return DriverManager.getConnection(dbUrl, username, password);
-    }
+    
 }
