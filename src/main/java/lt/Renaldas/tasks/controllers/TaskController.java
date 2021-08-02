@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TaskController {
 
     @GetMapping("/gameinjectionoverlay")
-    public String greeting(@RequestParam(name = "playertag", required = true) String playertag, @RequestParam(name = "platform", required = true) String platform, Model model) {
+//    public String greeting(@RequestParam(name = "playertag", required = true) String playertag, @RequestParam(name = "platform", required = true) String platform, Model model) {
+    public String greeting(@RequestParam(name = "playertag", required = true) String playertag, Model model) {
 
 
-        GetStats getStats = new GetStats(playertag, platform);
+        GetStats getStats = new GetStats(playertag);
         GetStats.Player player = getStats.getPlayerStats();
 
         model.addAttribute("LKD", player.lifetimeKD);
