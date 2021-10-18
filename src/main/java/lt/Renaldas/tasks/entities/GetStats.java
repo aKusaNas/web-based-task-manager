@@ -31,10 +31,13 @@ public class GetStats {
                 .build();
         Request request = new Request.Builder()
                 .url("https://app.wzstats.gg/v2/player?username="+ playertag +"&platform=" + platform)
-                .method("GET", null)
+                .get()
                 .build();
         try {
             Response response = client.newCall(request).execute();
+            if (response.code() != 202) {
+                return null;
+            }
             String responseBodyString = response.body().string();
             JSONObject Jobject = new JSONObject(responseBodyString);
             player.lifetimeKD = Math.round(Double.parseDouble(Jobject.getJSONObject("data").getJSONObject("lifetime").getJSONObject("mode").getJSONObject("br").getJSONObject("properties").get("kdRatio").toString()) * 100.0) / 100.0;

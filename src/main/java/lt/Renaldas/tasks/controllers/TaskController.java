@@ -14,6 +14,9 @@ public class TaskController {
 
 
         GetStats getStats = new GetStats(playertag, platform);
+        if (getStats.getPlayerStats() == null) {
+            return "ohno";
+        }
         GetStats.Player player = getStats.getPlayerStats();
 
         model.addAttribute("LKD", player.lifetimeKD);
