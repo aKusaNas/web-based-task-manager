@@ -35,7 +35,7 @@ public class GetStats {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            if (response.code() != 202) {
+            if (response.code() != 200) {
                 return null;
             }
             String responseBodyString = response.body().string();
