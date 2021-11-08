@@ -1,10 +1,13 @@
 package lt.Renaldas.tasks.controllers;
 
 import lt.Renaldas.tasks.entities.GetStats;
+import lt.Renaldas.tasks.entities.GetWeeklySolosInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class TaskController {
@@ -27,4 +30,11 @@ public class TaskController {
         return "overlay";
     }
 
+    @GetMapping("/weeklysolosquad")
+    public String weeklysolosquad(Model model) {
+
+        List<GetWeeklySolosInfo.Zaidejai> zaidejaiList = GetWeeklySolosInfo.getWeeklySolosZaidejus();
+        model.addAttribute("zaidejai", zaidejaiList);
+        return "weeklysolosquad";
+    }
 }
