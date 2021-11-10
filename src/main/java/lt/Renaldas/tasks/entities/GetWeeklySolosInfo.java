@@ -30,18 +30,18 @@ public class GetWeeklySolosInfo {
 //                    "FROM   player_matches\n" +
 //                    "GROUP  BY 1\n" +
 //                    "ORDER BY points DESC;")
-                    "SELECT (CASE WHEN t.username IS NULL THEN p.discord_user_name ELSE p.discord_user_name END) AS username,\n" +
+                    "SELECT (CASE WHEN t.username IS NULL THEN p.discord_user_name ELSE p.discord_user_name END) AS zaidejai,\n" +
                             "       SUM(CASE WHEN t.points::FLOAT IS NOT NULL THEN t.points::FLOAT ELSE 0.0 END)         AS points,\n" +
                             "       COALESCE(string_agg(t.matchid, ', '), '')                                            AS zaidimai\n" +
                             "FROM weekly_solos b\n" +
                             "         LEFT JOIN player_matches t ON b.uno = t.uno\n" +
                             "         LEFT JOIN wzregistration p ON b.uno = p.uno\n" +
-                            "GROUP BY str\n" +
+                            "GROUP BY zaidejai\n" +
                             "ORDER BY points DESC;"))
              {
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
-                    Zaidejai zaidejas = new Zaidejai(++vieta, rs.getString("username"), rs.getString("points"), rs.getString("zaidimai"));
+                    Zaidejai zaidejas = new Zaidejai(++vieta, rs.getString("zaidejai"), rs.getString("points"), rs.getString("zaidimai"));
                     zaidejaiList.add(zaidejas);
 
                 }
