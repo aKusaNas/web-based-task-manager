@@ -30,7 +30,7 @@ public class GetWeeklySolosInfo {
 //                    "FROM   player_matches\n" +
 //                    "GROUP  BY 1\n" +
 //                    "ORDER BY points DESC;")
-                    "SELECT (CASE WHEN t.username IS NULL THEN p.discord_user_name ELSE p.discord_user_name END) AS str,\n" +
+                    "SELECT (CASE WHEN t.username IS NULL THEN p.discord_user_name ELSE p.discord_user_name END) AS username,\n" +
                             "       SUM(CASE WHEN t.points::FLOAT IS NOT NULL THEN t.points::FLOAT ELSE 0.0 END)         AS points,\n" +
                             "       COALESCE(string_agg(t.matchid, ', '), '')                                            AS zaidimai\n" +
                             "FROM weekly_solos b\n" +
