@@ -6,9 +6,12 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.logging.Formatter;
 
 public class GetWeeklySolosInfo {
     public static final String DBKEY = System.getenv("DATABASE_URL");
@@ -16,6 +19,7 @@ public class GetWeeklySolosInfo {
 
     public static Connection getConnection() throws URISyntaxException, SQLException {
         URI dbUri = new URI(DBKEY);
+
 
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
@@ -27,6 +31,7 @@ public class GetWeeklySolosInfo {
 
 
         List<Zaidejai> zaidejaiList = new ArrayList<>();
+
         int vieta = 0;
         try (Connection connection = getConnection()) {
 //            // IMAMI 5 ZAIDEJAI IS MATCHES LENTELES SU SUMUOTAIS TASKAIS
@@ -42,8 +47,7 @@ public class GetWeeklySolosInfo {
                             "         LEFT JOIN player_matches t ON b.uno = t.uno\n" +
                             "         LEFT JOIN wzregistration p ON b.uno = p.uno\n" +
                             "GROUP BY zaidejai\n" +
-                            "ORDER BY points DESC;"))
-             {
+                            "ORDER BY points DESC;")) {
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
                     Zaidejai zaidejas = new Zaidejai(++vieta, rs.getString("zaidejai"), rs.getString("points"), rs.getString("zaidimai"));
@@ -56,17 +60,41 @@ public class GetWeeklySolosInfo {
             throwables.printStackTrace();
         }
 
-//        Calendar calendar = Calendar.getInstance();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(1636539819492L);
-        String pradetas = calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + " - " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
-        calendar.add(Calendar.DATE, 7);
-        String baigiasi = calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + " - " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
-        logger.info(pradetas + "  /// " + baigiasi + " timezone: " + calendar.getTimeZone());
-        ;
-
         return zaidejaiList;
     }
+
+    public static String getWeeklyTime() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfhour = new SimpleDateFormat("HH:mm:ss");
+        TimeZone tz = TimeZone.getTimeZone("Europe/Helsinki");
+        long start = 0;
+        long end = 0;
+
+        calendar.setTimeZone(tz);
+
+        try (Connection connection = getConnection()) {
+            try (PreparedStatement st = connection.prepareStatement(
+                    "SELECT startinmillis, endinmillis FROM weekly_solos_status;")) {
+                ResultSet rs = st.executeQuery();
+                while (rs.next()) {
+
+                    start = rs.getLong("startinmillis");
+                    end = rs.getLong("endinmillis");
+                }
+            }
+
+        } catch (SQLException | URISyntaxException throwables) {
+            throwables.printStackTrace();
+        }
+        String weeklyTime = " / ";
+        calendar.setTimeInMillis(start);
+        weeklyTime += sdf.format(calendar.getTime()) + " - ";
+        calendar.setTimeInMillis(end);
+        weeklyTime += sdf.format(calendar.getTime()) + " - " + sdfhour.format(calendar.getTime()) + " X \\";
+        return weeklyTime;
+    }
+
 
     public static class Zaidejai {
         public Zaidejai(int vieta, String nickname, String taskai, String zaidimai) {

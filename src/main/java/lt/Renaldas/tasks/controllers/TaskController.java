@@ -33,8 +33,9 @@ public class TaskController {
     @GetMapping("/weeklysolosquad")
     public String weeklysolosquad(Model model) {
 
-        List<GetWeeklySolosInfo.Zaidejai> zaidejaiList = GetWeeklySolosInfo.getWeeklySolosZaidejus();
-        model.addAttribute("zaidejai", zaidejaiList);
+//        List<GetWeeklySolosInfo.Zaidejai> zaidejaiList = GetWeeklySolosInfo.getWeeklySolosZaidejus();
+        model.addAttribute("zaidejai", GetWeeklySolosInfo.getWeeklySolosZaidejus());
+        model.addAttribute("laikas", GetWeeklySolosInfo.getWeeklyTime());
         return "weeklysolosquad";
     }
 }
