@@ -1,13 +1,18 @@
 package lt.Renaldas.tasks.entities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class GetWeeklySolosInfo {
     public static final String DBKEY = System.getenv("DATABASE_URL");
+    private static final Logger logger = LoggerFactory.getLogger(GetWeeklySolosInfo.class);
 
     public static Connection getConnection() throws URISyntaxException, SQLException {
         URI dbUri = new URI(DBKEY);
@@ -50,6 +55,16 @@ public class GetWeeklySolosInfo {
         } catch (SQLException | URISyntaxException throwables) {
             throwables.printStackTrace();
         }
+
+//        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(1636539819492L);
+        String pradetas = calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + " - " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
+        calendar.add(Calendar.DATE, 7);
+        String baigiasi = calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + " - " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
+        logger.info(pradetas + "  /// " + baigiasi + " timezone: " + calendar.getTimeZone());
+        ;
+
         return zaidejaiList;
     }
 
