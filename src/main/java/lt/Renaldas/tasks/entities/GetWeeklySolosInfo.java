@@ -25,10 +25,20 @@ public class GetWeeklySolosInfo {
         int vieta = 0;
         try (Connection connection = getConnection()) {
 //            // IMAMI 5 ZAIDEJAI IS MATCHES LENTELES SU SUMUOTAIS TASKAIS
-            try (PreparedStatement st = connection.prepareStatement("SELECT username, string_agg(matchid, ', ') AS zaidimai, SUM (points::FLOAT) AS points\n" +
-                    "FROM   player_matches\n" +
-                    "GROUP  BY 1\n" +
-                    "ORDER BY points DESC;")) {
+            try (PreparedStatement st = connection.prepareStatement(
+//                    "SELECT username, string_agg(matchid, ', ') AS zaidimai, SUM (points::FLOAT) AS points\n" +
+//                    "FROM   player_matches\n" +
+//                    "GROUP  BY 1\n" +
+//                    "ORDER BY points DESC;")
+                    "SELECT (CASE WHEN t.username IS NULL THEN p.discord_user_name ELSE p.discord_user_name END) AS str,\n" +
+                            "       SUM(CASE WHEN t.points::FLOAT IS NOT NULL THEN t.points::FLOAT ELSE 0.0 END)         AS points,\n" +
+                            "       COALESCE(string_agg(t.matchid, ', '), '')                                            AS zaidimai\n" +
+                            "FROM weekly_solos b\n" +
+                            "         LEFT JOIN player_matches t ON b.uno = t.uno\n" +
+                            "         LEFT JOIN wzregistration p ON b.uno = p.uno\n" +
+                            "GROUP BY str\n" +
+                            "ORDER BY points DESC;"))
+             {
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
                     Zaidejai zaidejas = new Zaidejai(++vieta, rs.getString("username"), rs.getString("points"), rs.getString("zaidimai"));
