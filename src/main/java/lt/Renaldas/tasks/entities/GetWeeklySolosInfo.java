@@ -68,15 +68,15 @@ public class GetWeeklySolosInfo {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfhour = new SimpleDateFormat("HH:mm:ss");
 
-        for (String availableID : TimeZone.getAvailableIDs()) {
-            System.out.println(availableID);
-        }
+//        for (String availableID : TimeZone.getAvailableIDs()) {
+//            System.out.println(availableID);
+//        }
 
         System.out.println(calendar.getTimeZone());
 
-        TimeZone tz = TimeZone.getTimeZone("EET");
+        TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
 //        TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
-
+        System.out.println(calendar.getTimeZone());
         calendar.setTimeZone(tz);
 
 
