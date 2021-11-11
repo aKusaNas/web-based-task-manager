@@ -61,7 +61,7 @@ public class GetWeeklySolosInfo {
     }
 
     public static String getWeeklyTime() {
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = new GregorianCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfhour = new SimpleDateFormat("HH:mm:ss");
 
@@ -71,29 +71,29 @@ public class GetWeeklySolosInfo {
 
         System.out.println(calendar.getTimeZone());
         System.out.println(sdfhour.format(calendar.getTime()));
-        TimeZone tz = TimeZone.getTimeZone("GMT+2");
+        TimeZone timeZone = TimeZone.getTimeZone("Europe/Vilnius");
 //        TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
         System.out.println(":///////////////:");
-        calendar.setTimeZone(tz);
+//        calendar.setTimeZone(tz);
 
-        System.out.println(tz.useDaylightTime());
-        System.out.println(calendar.getTimeZone());
-        System.out.println(sdfhour.format(calendar.getTime()));
+//        System.out.println(tz.useDaylightTime());
+//        System.out.println(calendar.getTimeZone());
+//        System.out.println(sdfhour.format(calendar.getTime()));
 
-        TimeZone timeZone1 = TimeZone.getTimeZone("America/Los_Angeles");
-        TimeZone timeZone2 = TimeZone.getTimeZone("Europe/Vilnius");
+//        TimeZone timeZone1 = TimeZone.getTimeZone("America/Los_Angeles");
 
-        Calendar calendar2 = new GregorianCalendar();
 
-        long timeCPH = calendar2.getTimeInMillis();
-        System.out.println("timeCPH  = " + timeCPH);
-        System.out.println("hour     = " + calendar2.get(Calendar.HOUR_OF_DAY));
 
-        calendar2.setTimeZone(timeZone2);
 
-        long timeLA = calendar.getTimeInMillis();
-        System.out.println("timeLA   = " + timeLA);
-        System.out.println("hour     = " + calendar2.get(Calendar.HOUR_OF_DAY));
+//        long timeCPH = calendar2.getTimeInMillis();
+//        System.out.println("timeCPH  = " + timeCPH);
+//        System.out.println("hour     = " + calendar2.get(Calendar.HOUR_OF_DAY));
+
+        calendar.setTimeZone(timeZone);
+
+//        long timeLA = calendar.getTimeInMillis();
+//        System.out.println("timeLA   = " + timeLA);
+//        System.out.println("hour     = " + calendar2.get(Calendar.HOUR_OF_DAY));
 
 
         long start = 0;
