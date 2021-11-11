@@ -73,7 +73,7 @@ public class GetWeeklySolosInfo {
 //        }
 
         System.out.println(calendar.getTimeZone());
-        System.out.println(sdf.format(calendar.getTime()));
+        System.out.println(sdfhour.format(calendar.getTime()));
         TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
 //        TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
         System.out.println(":///////////////:");
@@ -81,7 +81,7 @@ public class GetWeeklySolosInfo {
 
         System.out.println(tz.useDaylightTime());
         System.out.println(calendar.getTimeZone());
-        System.out.println(sdf.format(calendar.getTime()));
+        System.out.println(sdfhour.format(calendar.getTime()));
 
 
         long start = 0;
@@ -107,6 +107,7 @@ public class GetWeeklySolosInfo {
         weeklyTime += sdf.format(calendar.getTime()) + " - ";
         calendar.setTimeInMillis(end);
         weeklyTime += sdf.format(calendar.getTime()) + " - " + sdfhour.format(calendar.getTime()) + " X \\";
+        System.out.println(sdfhour.format(calendar.getTime()));
         return weeklyTime;
     }
 
