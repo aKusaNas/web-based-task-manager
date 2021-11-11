@@ -74,7 +74,7 @@ public class GetWeeklySolosInfo {
 
         System.out.println(calendar.getTimeZone());
         System.out.println(sdfhour.format(calendar.getTime()));
-        TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
+        TimeZone tz = TimeZone.getTimeZone("Etc/GMT+2");
 //        TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
         System.out.println(":///////////////:");
         calendar.setTimeZone(tz);
