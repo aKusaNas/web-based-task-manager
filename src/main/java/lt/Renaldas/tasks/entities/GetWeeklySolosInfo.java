@@ -7,10 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.logging.Formatter;
 
 public class GetWeeklySolosInfo {
@@ -82,6 +79,21 @@ public class GetWeeklySolosInfo {
         System.out.println(tz.useDaylightTime());
         System.out.println(calendar.getTimeZone());
         System.out.println(sdfhour.format(calendar.getTime()));
+
+        TimeZone timeZone1 = TimeZone.getTimeZone("America/Los_Angeles");
+        TimeZone timeZone2 = TimeZone.getTimeZone("Europe/Vilnius");
+
+        Calendar calendar2 = new GregorianCalendar();
+
+        long timeCPH = calendar2.getTimeInMillis();
+        System.out.println("timeCPH  = " + timeCPH);
+        System.out.println("hour     = " + calendar2.get(Calendar.HOUR_OF_DAY));
+
+        calendar2.setTimeZone(timeZone2);
+
+        long timeLA = calendar.getTimeInMillis();
+        System.out.println("timeLA   = " + timeLA);
+        System.out.println("hour     = " + calendar2.get(Calendar.HOUR_OF_DAY));
 
 
         long start = 0;
