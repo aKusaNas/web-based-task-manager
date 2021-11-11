@@ -67,11 +67,13 @@ public class GetWeeklySolosInfo {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfhour = new SimpleDateFormat("HH:mm:ss");
-        TimeZone tz = TimeZone.getTimeZone("Europe/Helsinki");
+
+        TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
+        calendar.setTimeZone(tz);
+
         long start = 0;
         long end = 0;
 
-        calendar.setTimeZone(tz);
 
         try (Connection connection = getConnection()) {
             try (PreparedStatement st = connection.prepareStatement(
