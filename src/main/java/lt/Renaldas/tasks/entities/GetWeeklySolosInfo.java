@@ -73,13 +73,15 @@ public class GetWeeklySolosInfo {
 //        }
 
         System.out.println(calendar.getTimeZone());
-
+        System.out.println(sdf.format(calendar.getTime()));
         TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
 //        TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
-        System.out.println(calendar.getTimeZone());
+        System.out.println(":///////////////:");
         calendar.setTimeZone(tz);
 
-
+        System.out.println(tz.useDaylightTime());
+        System.out.println(calendar.getTimeZone());
+        System.out.println(sdf.format(calendar.getTime()));
 
 
         long start = 0;
