@@ -87,7 +87,7 @@ public class GetWeeklySolosInfo {
 
 //        long timeCPH = calendar2.getTimeInMillis();
 //        System.out.println("timeCPH  = " + timeCPH);
-//        System.out.println("hour     = " + calendar2.get(Calendar.HOUR_OF_DAY));
+        System.out.println("hour     = " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
 
         calendar.setTimeZone(timeZone);
 
@@ -118,7 +118,7 @@ public class GetWeeklySolosInfo {
         calendar.setTimeInMillis(start);
         weeklyTime += sdf.format(calendar.getTime()) + " - ";
         calendar.setTimeInMillis(end);
-        weeklyTime += sdf.format(calendar.getTime()) + " - " + sdfhour.format(calendar.getTime()) + " X \\";
+        weeklyTime += sdf.format(calendar.getTime()) + " - " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE) + " \\";
         System.out.println(sdfhour.format(calendar.getTime()));
         return weeklyTime;
     }
