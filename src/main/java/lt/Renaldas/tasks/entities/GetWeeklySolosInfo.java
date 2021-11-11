@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.Formatter;
 
 public class GetWeeklySolosInfo {
     public static final String DBKEY = System.getenv("DATABASE_URL");
@@ -63,39 +62,8 @@ public class GetWeeklySolosInfo {
     public static String getWeeklyTime() {
         Calendar calendar = new GregorianCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdfhour = new SimpleDateFormat("HH:mm:ss");
-
-//        for (String availableID : TimeZone.getAvailableIDs()) {
-//            System.out.println(availableID);
-//        }
-
-        System.out.println(calendar.getTimeZone());
-        System.out.println(sdfhour.format(calendar.getTime()));
         TimeZone timeZone = TimeZone.getTimeZone("Europe/Vilnius");
-//        TimeZone tz = TimeZone.getTimeZone("Europe/Vilnius");
-        System.out.println(":///////////////:");
-//        calendar.setTimeZone(tz);
-
-//        System.out.println(tz.useDaylightTime());
-//        System.out.println(calendar.getTimeZone());
-//        System.out.println(sdfhour.format(calendar.getTime()));
-
-//        TimeZone timeZone1 = TimeZone.getTimeZone("America/Los_Angeles");
-
-
-
-
-//        long timeCPH = calendar2.getTimeInMillis();
-//        System.out.println("timeCPH  = " + timeCPH);
-        System.out.println("hour     = " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
-
         calendar.setTimeZone(timeZone);
-
-//        long timeLA = calendar.getTimeInMillis();
-//        System.out.println("timeLA   = " + timeLA);
-//        System.out.println("hour     = " + calendar2.get(Calendar.HOUR_OF_DAY));
-
-
         long start = 0;
         long end = 0;
 
@@ -118,11 +86,9 @@ public class GetWeeklySolosInfo {
         calendar.setTimeInMillis(start);
         weeklyTime += sdf.format(calendar.getTime()) + " - ";
         calendar.setTimeInMillis(end);
-        weeklyTime += sdf.format(calendar.getTime()) + " - " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE) + " \\";
-        System.out.println(sdfhour.format(calendar.getTime()));
+        weeklyTime += sdf.format(calendar.getTime()) + " - " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + " \\";
         return weeklyTime;
     }
-
 
     public static class Zaidejai {
         public Zaidejai(int vieta, String nickname, String taskai, String zaidimai) {
