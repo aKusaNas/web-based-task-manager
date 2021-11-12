@@ -36,17 +36,28 @@ public class GetWeeklySolosInfo {
 //                    "FROM   player_matches\n" +
 //                    "GROUP  BY 1\n" +
 //                    "ORDER BY points DESC;")
-                    "SELECT (CASE WHEN t.username IS NULL THEN p.discord_user_name ELSE p.discord_user_name END) AS zaidejai,\n" +
-                            "       SUM(CASE WHEN t.points::FLOAT IS NOT NULL THEN t.points::FLOAT ELSE 0.0 END)         AS points,\n" +
-                            "       COALESCE(string_agg(t.matchid, ', '), '')                                            AS zaidimai\n" +
-                            "FROM weekly_solos b\n" +
-                            "         LEFT JOIN player_matches t ON b.uno = t.uno\n" +
-                            "         LEFT JOIN wzregistration p ON b.uno = p.uno\n" +
-                            "GROUP BY zaidejai\n" +
-                            "ORDER BY points DESC;")) {
+//                    "SELECT (CASE WHEN t.username IS NULL THEN p.discord_user_name ELSE p.discord_user_name END) AS zaidejai,\n" +
+//                            "       SUM(CASE WHEN t.points::FLOAT IS NOT NULL THEN t.points::FLOAT ELSE 0.0 END)         AS points,\n" +
+//                            "       COALESCE(string_agg(t.matchid, ', '), '')                                            AS zaidimai\n" +
+//                            "FROM weekly_solos b\n" +
+//                            "         LEFT JOIN player_matches t ON b.uno = t.uno\n" +
+//                            "         LEFT JOIN wzregistration p ON b.uno = p.uno\n" +
+//                            "GROUP BY zaidejai\n" +
+//                            "ORDER BY points DESC;")
+            "SELECT (CASE WHEN t.username IS NULL THEN p.discord_user_name ELSE p.discord_user_name END) AS zaidejai,\n" +
+                    "       SUM(CASE WHEN t.points::FLOAT IS NOT NULL THEN t.points::FLOAT ELSE 0.0 END)         AS points,\n" +
+                    "       COALESCE(string_agg(t.matchid, ', '), '')                                            AS zaidimai,\n" +
+                    "       (CASE WHEN t.username IS NULL THEN t.username ELSE t.username END) AS activisionuser\n" +
+                    "FROM weekly_solos b\n" +
+                    "         LEFT JOIN player_matches t ON b.uno = t.uno\n" +
+                    "         LEFT JOIN wzregistration p ON b.uno = p.uno\n" +
+                    "GROUP BY zaidejai, activisionuser\n" +
+                    "ORDER BY points DESC;")
+
+            ) {
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
-                    Zaidejai zaidejas = new Zaidejai(++vieta, rs.getString("zaidejai"), rs.getString("points"), rs.getString("zaidimai"));
+                    Zaidejai zaidejas = new Zaidejai(++vieta, rs.getString("zaidejai"), rs.getString("points"), rs.getString("zaidimai"), rs.getString("activisionuser"));
                     zaidejaiList.add(zaidejas);
 
                 }
@@ -64,6 +75,7 @@ public class GetWeeklySolosInfo {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         TimeZone timeZone = TimeZone.getTimeZone("Europe/Vilnius");
         calendar.setTimeZone(timeZone);
+//        calendar.
         long start = 0;
         long end = 0;
 
@@ -91,17 +103,19 @@ public class GetWeeklySolosInfo {
     }
 
     public static class Zaidejai {
-        public Zaidejai(int vieta, String nickname, String taskai, String zaidimai) {
+        public Zaidejai(int vieta, String nickname, String taskai, String zaidimai, String activisionuser) {
             this.vieta = vieta;
             this.nickname = nickname;
             this.taskai = taskai;
             this.zaidimai = zaidimai;
+            this.activisionuser = activisionuser;
         }
 
         public int vieta;
         public String nickname;
         public String taskai;
         public String zaidimai;
+        public String activisionuser;
     }
 
 }

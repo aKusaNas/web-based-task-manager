@@ -30,18 +30,25 @@
 <table class="rwd-table" id="teible">
     <tr>
         <th>#</th>
-        <th>Žaidėjai</th>
+        <th>Žaidėjas</th>
         <th>Taškai</th>
         <th>Žaidimai</th>
     </tr>
 
     <th:block th:each="zaidejas : ${zaidejai}">
         <tr>
-            <td data-th="#" th:text="${zaidejas.vieta}"></td>
-            <td data-th="Žaidėjai" th:text="${zaidejas.nickname}"></td>
-            <td data-th="Taškai" th:text="${zaidejas.taskai}"></td>
-            <td data-th="Žaidimai" th:text="${zaidejas.zaidimai}"></td>
-        </tr>
+            <td data-th="#" th:text="${zaidejas.vieta}">123</td>
+            <td data-th="Žaidėjas" th:text="${zaidejas.nickname}">123</td>
+            <td data-th="Taškai" th:text="${zaidejas.taskai}">12313,1233</td>
+            <!--            <td data-th="Žaidimai" th:text="${zaidejas.zaidimai}">-->
+            <td data-th="Žaidimai">
+                <div th:each="zaidimas : ${#strings.arraySplit(zaidejas.zaidimai, ',')}">
+                    <a target="_blank"
+                       th:href="'https://cod.tracker.gg/warzone/match/'+${zaidimas} + '?handle=' + ${zaidejas.activisionuser}"
+                       th:title="'Nuoroda į cod.tracker žaidimą'" th:text="${zaidimas}">
+                    </a>
+                </div>
+            </td>
     </th:block>
 
 
@@ -81,8 +88,8 @@
     .rwd-table td:before {
         content: attr(data-th) ": ";
         font-weight: bold;
-        width: 6.5em;
-        display: inline-block;
+        /*width: 1em;*/
+        display: block;
     }
 
     @media (min-width: 480px) {
@@ -161,6 +168,30 @@
 
     #teible tr:hover {
         background-color: #55accf;
+    }
+
+    a:link {
+        color: #ffffff;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #ffffff;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #00c49a;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: red;
+        background-color: transparent;
+        text-decoration: underline;
     }
 
     /*# sourceMappingURL=weeklystyle.css.map */
