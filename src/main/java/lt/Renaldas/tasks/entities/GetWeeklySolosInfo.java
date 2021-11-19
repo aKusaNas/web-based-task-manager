@@ -78,7 +78,7 @@ public class GetWeeklySolosInfo {
 
     public static String getWeeklyTime() {
         Calendar calendar = new GregorianCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd - HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         TimeZone timeZone = TimeZone.getTimeZone("Europe/Vilnius");
         calendar.setTimeZone(timeZone);
 //        calendar.
