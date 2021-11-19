@@ -108,7 +108,7 @@ public class GetWeeklySolosInfo {
         return weeklyTime;
     }
 
-    public static List<String> getHistory(){
+    public static List<String> getHistory() {
 
         List<String> historyList = new ArrayList<>();
 
@@ -132,6 +132,32 @@ public class GetWeeklySolosInfo {
             throwables.printStackTrace();
         }
         return historyList;
+    }
+
+    public static List<Zaidejai> getMatchHistorybyDate(String data) {
+        List<Zaidejai> zaidejaiList = new ArrayList<>();
+        int vieta = 0;
+
+        String goodData = getHistory().stream().filter(x -> x.matches(data)).findFirst().orElse(null);
+
+        if (goodData == null) return null;
+
+        if (!data.isEmpty()) {
+            try (Connection connection = getConnection()) {
+//            // IMAMI 5 ZAIDEJAI IS MATCHES LENTELES SU SUMUOTAIS TASKAIS
+                try (PreparedStatement st = connection.prepareStatement("SELECT * FROM " + goodData + ";")) {
+                    ResultSet rs = st.executeQuery();
+                    while (rs.next()) {
+                        Zaidejai zaidejas = new Zaidejai(++vieta, rs.getString("zaidejai"), rs.getString("points"), rs.getString("zaidimai"), rs.getString("activisionuser"));
+                        zaidejaiList.add(zaidejas);
+                    }
+                }
+
+            } catch (SQLException | URISyntaxException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return zaidejaiList;
     }
 
     public static class Zaidejai {

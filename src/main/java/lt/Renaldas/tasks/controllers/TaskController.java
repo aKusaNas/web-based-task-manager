@@ -5,7 +5,9 @@ import lt.Renaldas.tasks.entities.GetWeeklySolosInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -36,6 +38,23 @@ public class TaskController {
 //        List<GetWeeklySolosInfo.Zaidejai> zaidejaiList = GetWeeklySolosInfo.getWeeklySolosZaidejus();
         model.addAttribute("zaidejai", GetWeeklySolosInfo.getWeeklySolosZaidejus());
         model.addAttribute("laikas", GetWeeklySolosInfo.getWeeklyTime());
+        model.addAttribute("historyList", GetWeeklySolosInfo.getHistory());
+
         return "weeklysolosquad";
+    }
+
+    @GetMapping("/weeklysolosquad/{data}")
+    public String getMatchHistory(@PathVariable("data") String data, Model model) {
+
+        List<GetWeeklySolosInfo.Zaidejai> zaidejai = GetWeeklySolosInfo.getMatchHistorybyDate(data);
+
+        if (zaidejai != null) {
+            model.addAttribute("zaidejai", zaidejai);
+            model.addAttribute("laikas", data);
+            return "weeklysolosquad";
+
+        } else {
+            return "404";
+        }
     }
 }
