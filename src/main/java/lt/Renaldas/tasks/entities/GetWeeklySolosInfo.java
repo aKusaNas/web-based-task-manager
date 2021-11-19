@@ -103,8 +103,8 @@ public class GetWeeklySolosInfo {
         calendar.setTimeInMillis(start);
         weeklyTime += sdf.format(calendar.getTime()) + " - ";
         calendar.setTimeInMillis(end);
-//        weeklyTime += sdf.format(calendar.getTime()) + " - " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + " \\";
-        weeklyTime += sdf.format(calendar.getTime()) + " \\";
+        weeklyTime += sdf.format(calendar.getTime()) + " - " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + " \\";
+//        weeklyTime += sdf.format(calendar.getTime()) + " \\";
         return weeklyTime;
     }
 
